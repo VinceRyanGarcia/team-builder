@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function Form(props){
-  // THESE ARE THE **EXACT PROPS** FriendForm EXPECTS!!!
     const { values, update, submit } = props
 
     const onChange = e => {
