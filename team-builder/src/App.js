@@ -1,23 +1,55 @@
-import logo from './logo.svg';
+import React, { useState } from 'react'
+import Friend from './Friend'
 import './App.css';
+import Form from './Form'
 
 function App() {
+
+  const initialFormValues = {
+    username: '',
+    email: '',
+    role: '',
+  }
+  const [members, setMember] = useState([])
+  const [formValues, setFormValues] = useState(initialFormValues)
+
+  const updateForm = (inputName, inputValue) => {
+    setFormValues({ ...formValues, [inputName]: inputValue })
+  }
+
+  const submitForm = () => {
+    const newMember = {
+      username: formValues.username.trim(),
+      email: formValues.email.trim(),
+      role: formValues.role,
+    }
+
+    if (!newMember.username || !newMember.email || !newMember.role) return
+
+
+    setMember([newMember, ...members])
+    setFormValues(initialFormValues)
+
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <h1>Form App</h1>
+      <Form
+        values={formValues}
+        update={updateForm}
+        submit={submitForm}
+      />
+
+      {
+        members.map(member => {
+          return (
+            <Friend key={member.id} details={member} />
+          )
+        })
+      }
+
     </div>
   );
 }
